@@ -17,12 +17,12 @@ const questions = [
   {
     question: "What color is the sky?",
     choices: ["Green", "Blue", "Black", "White"],
-    answer: "Blue",
+    answer: "#btn2",
   },
   {
     question: "What color is the green?",
     choices: ["Green", "Blue", "Black", "White"],
-    answer: "Green",
+    answer: "#btn1",
   },
 ];
 
@@ -30,10 +30,10 @@ startQuizEL.on("click", function (event) {
   startQuizBlockEL.hide();
   questionBlockEL.show();
   questionEL.text(questions[0].question);
-  btn1EL.text(questions[0].choices[0]);
-  btn2EL.text(questions[0].choices[1]);
-  btn3EL.text(questions[0].choices[2]);
-  btn4EL.text(questions[0].choices[3]);
+  btn1EL.append(questions[0].choices[0]);
+  btn2EL.append(questions[0].choices[1]);
+  btn3EL.append(questions[0].choices[2]);
+  btn4EL.append(questions[0].choices[3]);
 });
 
 questionBlockEL.on("click", ".btn", function (event) {
