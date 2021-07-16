@@ -34,7 +34,7 @@ body {
 }
 
 .startQuiz p {
-  margin-bottom: 1rem;
+  margin: 1rem;
 }
 
 .question {
@@ -42,7 +42,16 @@ body {
 }
 
 .question h2 {
-    margin-bottom: 1rem;
+  margin: 1rem;
+}
+
+.question ul {
+  margin: 1rem;
+}
+
+.question hr {
+  opacity: .2;
+  margin: 1rem;
 }
 
 .btn {
