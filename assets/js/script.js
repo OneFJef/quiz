@@ -1,3 +1,4 @@
+const highScoreEL = $(".highScore");
 let timeCountEL = $("#timeCount");
 
 const startQuizBlockEL = $(".startQuiz");
@@ -69,6 +70,7 @@ questionBlockEL.on("click", ".btn", function (event) {
     gradeTextEL.text("Wrong");
     if (questionIndex < questions.length - 1) {
       questionIndex++;
+      secondsLeft -= 5;
     }
   }
   questionTemplate();

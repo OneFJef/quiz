@@ -28,6 +28,10 @@ body {
   margin: 0.5rem;
 }
 
+.highScore {
+  display: none;
+}
+
 .startQuiz {
   display: block;
   text-align: center;
