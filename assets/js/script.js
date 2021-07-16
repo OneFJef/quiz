@@ -1,3 +1,5 @@
+let timeCountEL = $("#timeCount");
+
 const startQuizBlockEL = $(".startQuiz");
 const questionBlockEL = $(".question");
 const questionEL = $("#question");
@@ -8,6 +10,9 @@ let btn2EL = $("#btn2");
 let btn3EL = $("#btn3");
 let btn4EL = $("#btn4");
 
+let gradeTextEL = $("#gradeText");
+
+let secondsLeft = 70;
 let questionIndex = 0;
 
 const questions = [
@@ -37,24 +42,35 @@ function questionTemplate() {
   btn4EL.text(questions[questionIndex].choices[3]);
 }
 
+function timer() {
+  let timerInterval = setInterval(function () {
+    secondsLeft--;
+    timeCountEL.text(secondsLeft);
+    if (secondsLeft === 0) {
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+}
+
 startQuizEL.on("click", function (event) {
   startQuizBlockEL.hide();
   questionBlockEL.show();
   questionTemplate();
+  timer();
 });
 
 questionBlockEL.on("click", ".btn", function (event) {
   if ($(event.target).is(questions[questionIndex].answer)) {
-    console.log("WAAAGH!!");
+    gradeTextEL.text("Correct");
     if (questionIndex < questions.length - 1) {
       questionIndex++;
     }
-    questionTemplate();
   } else {
-    console.log(":(");
+    gradeTextEL.text("Wrong");
     if (questionIndex < questions.length - 1) {
       questionIndex++;
     }
-    questionTemplate();
   }
+  questionTemplate();
+  $("#grade").fadeIn("fast");
 });
