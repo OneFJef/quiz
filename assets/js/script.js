@@ -14,6 +14,9 @@ let btn4$ = $("#btn4");
 
 let gradeText$ = $("#gradeText");
 
+const endScore$ = $(".endScore");
+let score$ = $("#score");
+
 let secondsLeft = 75;
 let timerInterval;
 let questionIndex = 0;
@@ -57,6 +60,15 @@ function timer() {
   }, 1000);
 }
 
+// Action taken when the quiz is finished.
+function doesQuizEnd() {
+  clearInterval(timerInterval);
+  timeCount$.text(secondsLeft);
+  questionBlock$.hide();
+  score$.text(secondsLeft);
+  endScore$.show();
+}
+
 // Button to start the quiz.
 startQuiz$.on("click", function (event) {
   startQuizBlock$.hide();
@@ -72,7 +84,7 @@ questionBlock$.on("click", ".btn", function (event) {
     if (questionIndex < questions.length - 1) {
       questionIndex++;
     } else {
-      clearInterval(timerInterval);
+      doesQuizEnd();
     }
   } else {
     gradeText$.text("Wrong");
@@ -80,7 +92,7 @@ questionBlock$.on("click", ".btn", function (event) {
       questionIndex++;
       secondsLeft -= 10;
     } else {
-      clearInterval(timerInterval);
+      doesQuizEnd();
     }
   }
   questionTemplate();
