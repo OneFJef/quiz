@@ -1,21 +1,24 @@
-const highScoreEL = $(".highScore");
-let timeCountEL = $("#timeCount");
+const header$ = $(".header");
+const highScore$ = $(".highScore");
+let timeCount$ = $("#timeCount");
 
-const startQuizBlockEL = $(".startQuiz");
-const questionBlockEL = $(".question");
-const questionEL = $("#question");
+const startQuizBlock$ = $(".startQuiz");
+const questionBlock$ = $(".question");
+const question$ = $("#question");
 
-const startQuizEL = $("#startQuiz");
-let btn1EL = $("#btn1");
-let btn2EL = $("#btn2");
-let btn3EL = $("#btn3");
-let btn4EL = $("#btn4");
+const startQuiz$ = $("#startQuiz");
+let btn1$ = $("#btn1");
+let btn2$ = $("#btn2");
+let btn3$ = $("#btn3");
+let btn4$ = $("#btn4");
 
-let gradeTextEL = $("#gradeText");
+let gradeText$ = $("#gradeText");
 
-let secondsLeft = 70;
+let secondsLeft = 75;
+let timerInterval;
 let questionIndex = 0;
 
+// Object of questions and answers.
 const questions = [
   {
     question: "When a gun fires what does an Ork hear?",
@@ -36,41 +39,48 @@ const questions = [
 
 // Sets question content.
 function questionTemplate() {
-  questionEL.text(questions[questionIndex].question);
-  btn1EL.text(questions[questionIndex].choices[0]);
-  btn2EL.text(questions[questionIndex].choices[1]);
-  btn3EL.text(questions[questionIndex].choices[2]);
-  btn4EL.text(questions[questionIndex].choices[3]);
+  question$.text(questions[questionIndex].question);
+  btn1$.text(questions[questionIndex].choices[0]);
+  btn2$.text(questions[questionIndex].choices[1]);
+  btn3$.text(questions[questionIndex].choices[2]);
+  btn4$.text(questions[questionIndex].choices[3]);
 }
 
+// Timer that starts when you start the quiz.
 function timer() {
-  let timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     secondsLeft--;
-    timeCountEL.text(secondsLeft);
+    timeCount$.text(secondsLeft);
     if (secondsLeft === 0) {
       clearInterval(timerInterval);
     }
   }, 1000);
 }
 
-startQuizEL.on("click", function (event) {
-  startQuizBlockEL.hide();
-  questionBlockEL.show();
+// Button to start the quiz.
+startQuiz$.on("click", function (event) {
+  startQuizBlock$.hide();
+  questionBlock$.show();
   questionTemplate();
   timer();
 });
 
-questionBlockEL.on("click", ".btn", function (event) {
+// Quiz choices and logic to determine right or wrong answers with timer penalty.
+questionBlock$.on("click", ".btn", function (event) {
   if ($(event.target).is(questions[questionIndex].answer)) {
-    gradeTextEL.text("Correct");
+    gradeText$.text("Correct");
     if (questionIndex < questions.length - 1) {
       questionIndex++;
+    } else {
+      clearInterval(timerInterval);
     }
   } else {
-    gradeTextEL.text("Wrong");
+    gradeText$.text("Wrong");
     if (questionIndex < questions.length - 1) {
       questionIndex++;
-      secondsLeft -= 5;
+      secondsLeft -= 10;
+    } else {
+      clearInterval(timerInterval);
     }
   }
   questionTemplate();
