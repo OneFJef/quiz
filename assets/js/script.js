@@ -1,5 +1,11 @@
-const header$ = $(".header");
-const highScore$ = $(".highScore");
+const headerBlock$ = $(".header");
+const highScoreBtn$ = $(".highScoreBtn");
+const highScoreBlock$ = $(".highScore");
+
+let highScoreList$ = $("#list");
+
+const highScoreBack$ = $("#highScoreBack");
+const highScoreClear$ = $("#highScoreClear");
 let timeCount$ = $("#timeCount");
 
 const startQuizBlock$ = $(".startQuiz");
@@ -14,7 +20,7 @@ let btn4$ = $("#btn4");
 
 let gradeText$ = $("#gradeText");
 
-const endScore$ = $(".endScore");
+const endScoreBlock$ = $(".endScore");
 let score$ = $("#score");
 
 let secondsLeft = 75;
@@ -39,6 +45,23 @@ const questions = [
     answer: "#btn1",
   },
 ];
+
+let highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+// Creates list of highscores.
+function highScoreTable() {
+  for (i = 0; i < highScores.length; i++) {
+    let scoreArray = highScores[i];
+    highScoreList$.append(
+      "<li>" + scoreArray.initials + ": " + scoreArray.score + "</li>"
+    );
+  }
+}
+
+// Clear listed highscores
+function highScoreTableClear() {
+  
+}
 
 // Sets question content.
 function questionTemplate() {
@@ -66,7 +89,17 @@ function doesQuizEnd() {
   timeCount$.text(secondsLeft);
   questionBlock$.hide();
   score$.text(secondsLeft);
-  endScore$.show();
+  endScoreBlock$.show();
+}
+
+// Shows highscore "page".
+function highScorePage() {
+  highScoreTable();
+  headerBlock$.hide();
+  startQuizBlock$.hide();
+  questionBlock$.hide();
+  highScoreBlock$.show();
+  endScoreBlock$.hide();
 }
 
 // Button to start the quiz.
@@ -97,4 +130,27 @@ questionBlock$.on("click", ".btn", function (event) {
   }
   questionTemplate();
   $("#grade").fadeIn("fast");
+});
+
+endScoreBlock$.on("click", ".btn", function (event) {
+  const score = {
+    initials: $("#initials").val(),
+    score: secondsLeft,
+  };
+  highScores.push(score);
+  highScores.sort((a, b) => b.score - a.score);
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  highScorePage();
+});
+
+headerBlock$.on("click", ".highScoreBtn", function (event) {
+  highScorePage();
+});
+
+highScoreBlock$.on("click", "#highScoreBack", function (event) {
+  window.location.reload();
+});
+
+highScoreBlock$.on("click", "#highScoreClear", function (event) {
+  localStorage.clear();
 });

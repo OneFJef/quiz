@@ -12,13 +12,18 @@
 
 <body>
     <header class="header">
-        <p>View High Score</p>
+        <p class="highScoreBtn">View Highscores</p>
         <p>Time: <span id="timeCount">75</span></p>
     </header>
 
     <main>
         <section class="highScore">
-
+            <h2>Highscores</h2>
+            <ol type="1" id="list">
+                <li></li>
+            </ol>
+            <button type="button" class="btn" id="highScoreBack">Go Back</button>
+            <button type="button" class="btn" id="highScoreClear">Clear Highscores</button>
         </section>
 
         <section class="startQuiz">
@@ -28,7 +33,7 @@
         </section>
 
         <section class="question">
-            <h2 id="question"></h2>
+            <h3 id="question"></h3>
             <ul>
                 <li><button class="btn" id="btn1"></button></li>
                 <li><button class="btn" id="btn2"></button></li>
@@ -45,8 +50,8 @@
             <h2>All Done!</h2>
             <p>Your final score is <span id="score"></span>.</p>
             <form id="highScoreEntry">
-                <input type="text" placeholder="Your name here." />
-                <button class="btn">Submit</button>
+                <input id="initials" type="text" placeholder="Your initials here." />
+                <button type="button" class="btn">Submit</button>
             </form>
         </section>
     </main>
