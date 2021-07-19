@@ -20,15 +20,15 @@
         <section class="highScore">
             <h2>Highscores</h2>
             <ol type="1" id="list">
-                <li></li>
             </ol>
             <button type="button" class="btn" id="highScoreBack">Go Back</button>
             <button type="button" class="btn" id="highScoreClear">Clear Highscores</button>
         </section>
 
         <section class="startQuiz">
-            <h2>What to play a game?</h2>
-            <p>Click start and see how well you do.</p>
+            <h2>Coding Quiz Challenge</h2>
+            <p>Try to answer the following code-related questions within 75 seconds. Keep in mind that incorrect
+                andswers will penalize your score/time by 10 seconds!</p>
             <button class="btn" id="startQuiz">Start Quiz</button>
         </section>
 
@@ -49,7 +49,7 @@
         <section class="endScore">
             <h2>All Done!</h2>
             <p>Your final score is <span id="score"></span>.</p>
-            <form id="highScoreEntry">
+            <form onsubmit="return false;" id="highScoreEntry">
                 <input id="initials" type="text" placeholder="Your initials here." />
                 <button type="button" class="btn">Submit</button>
             </form>

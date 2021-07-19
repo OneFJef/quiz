@@ -30,19 +30,32 @@ let questionIndex = 0;
 // Object of questions and answers.
 const questions = [
   {
-    question: "When a gun fires what does an Ork hear?",
-    choices: ["Pew Pew", "BANG!", "Dakka", "Pow Pow"],
+    question: "Commonly used data types DO NOT include:",
+    choices: ["Strings", "Booleans", "Alerts", "Numbers"],
     answer: "#btn3",
   },
   {
-    question: "What color is the sky?",
-    choices: ["Green", "Blue", "Black", "White"],
+    question:
+      "The condition in an if / else statement is enclosed within _____.",
+    choices: ["Quotes", "Curly Brackets", "Parentheses", "Square Brackets"],
     answer: "#btn2",
   },
   {
-    question: "What color is the green?",
-    choices: ["Green", "Blue", "Black", "White"],
+    question: "Arrays in JavaScript can be used to store _____.",
+    choices: ["Numbers", "Strings", "Booleans", "All of the Above"],
+    answer: "#btn4",
+  },
+  {
+    question:
+      "String values must be enclosed within _____ when being assigned to variables.",
+    choices: ["Quotes", "Commas", "Parentheses", "Curly Brackets"],
     answer: "#btn1",
+  },
+  {
+    question:
+      "A very useful tool used during development and debugging for printing content to the debugger is?",
+    choices: ["JavaScript", "Terminal/Bash", "For Loops", "Console.log"],
+    answer: "#btn4",
   },
 ];
 
@@ -53,14 +66,15 @@ function highScoreTable() {
   for (i = 0; i < highScores.length; i++) {
     let scoreArray = highScores[i];
     highScoreList$.append(
-      "<li>" + scoreArray.initials + ": " + scoreArray.score + "</li>"
+      "<li>" + scoreArray.initials + " - " + scoreArray.score + "</li>"
     );
   }
 }
 
 // Clear listed highscores
 function highScoreTableClear() {
-  
+  highScoreList$.remove();
+  localStorage.clear();
 }
 
 // Sets question content.
@@ -78,7 +92,7 @@ function timer() {
     secondsLeft--;
     timeCount$.text(secondsLeft);
     if (secondsLeft === 0) {
-      clearInterval(timerInterval);
+      doesQuizEnd();
     }
   }, 1000);
 }
@@ -132,9 +146,10 @@ questionBlock$.on("click", ".btn", function (event) {
   $("#grade").fadeIn("fast");
 });
 
+// Enter initials for your highscore, save to local storage, and sort the scores.
 endScoreBlock$.on("click", ".btn", function (event) {
   const score = {
-    initials: $("#initials").val(),
+    initials: $("#initials").val().toUpperCase(),
     score: secondsLeft,
   };
   highScores.push(score);
@@ -143,14 +158,17 @@ endScoreBlock$.on("click", ".btn", function (event) {
   highScorePage();
 });
 
+// Link to the highscore page.
 headerBlock$.on("click", ".highScoreBtn", function (event) {
   highScorePage();
 });
 
+// Button to go back to the quiz start page.
 highScoreBlock$.on("click", "#highScoreBack", function (event) {
   window.location.reload();
 });
 
+// Button to clear the highscores.
 highScoreBlock$.on("click", "#highScoreClear", function (event) {
-  localStorage.clear();
+  highScoreTableClear();
 });
